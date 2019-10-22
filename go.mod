@@ -1,4 +1,4 @@
-module github.com/wuwengang/ptunnel
+module github.com/vicnoah/ptunnel
 
 go 1.13
 
