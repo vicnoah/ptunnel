@@ -7,10 +7,13 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	httparser "wuwengang/ptunel/parser/http"
-	"wuwengang/ptunel/smart"
 
 	"golang.org/x/net/proxy"
+)
+
+const (
+	REMOTE_PROTOCOL = "tcp"
+	REMOTE_ADDRESS  = "127.0.0.1:1080"
 )
 
 // New 新建代理链
@@ -58,8 +61,6 @@ func (h *HTTP2Socks) Out(outFunc func()) {
 }
 
 func outFunc(w http.ResponseWriter, r *http.Request, h *HTTP2Socks) {
-	// 数据解析
-	smart.IsLocal(httparser.New(httparser.P()))
 	// 数据分类型代理
 	if r.Method == http.MethodConnect {
 		// Connect连接
@@ -81,7 +82,7 @@ func (h *HTTP2Socks) Start() {
 }
 
 func handleHTTProxy(w http.ResponseWriter, r *http.Request) {
-	dialer, err := proxy.SOCKS5("tcp", "192.168.5.50:1080", nil, proxy.Direct)
+	dialer, err := proxy.SOCKS5(REMOTE_PROTOCOL, REMOTE_ADDRESS, nil, proxy.Direct)
 	if err != nil {
 		fmt.Printf("can't connect to the proxy:%v\r\n", err)
 		return
@@ -113,11 +114,10 @@ func handleHTTProxy(w http.ResponseWriter, r *http.Request) {
 }
 
 func handleSOCKSTunnel(w http.ResponseWriter, r *http.Request) {
-	dialer, err := proxy.SOCKS5("tcp", "192.168.5.50:1080", nil, proxy.Direct)
+	dialer, err := proxy.SOCKS5(REMOTE_PROTOCOL, REMOTE_ADDRESS, nil, proxy.Direct)
 	if err != nil {
 		fmt.Printf("can't connect to the proxy:%v\r\n", err)
 	}
-	// ssocks5Proxy := socks.DialSocksProxy(socks.SOCKS5, "192.168.5.50:1080")
 	destConn, err := dialer.Dial("tcp", r.Host)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusServiceUnavailable)

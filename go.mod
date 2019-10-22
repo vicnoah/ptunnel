@@ -1,5 +1,5 @@
-module wuwengang/ptunel
+module github.com/wuwengang/ptunnel
 
-go 1.12
+go 1.13
 
-require golang.org/x/net v0.0.0-20190912160710-24e19bdeb0f2
+require golang.org/x/net v0.0.0-20191021144547-ec77196f6094

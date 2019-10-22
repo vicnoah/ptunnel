@@ -1,9 +1,9 @@
 package main
 
 import (
-	"wuwengang/ptunel/handler"
-	"wuwengang/ptunel/proxy/http2socks"
-	"wuwengang/ptunel/proxy/tcp2socks"
+	"github.com/wuwengang/ptunnel/handler"
+	"github.com/wuwengang/ptunnel/proxy/http2socks"
+	"github.com/wuwengang/ptunnel/proxy/tcp2socks"
 )
 
 func main() {
